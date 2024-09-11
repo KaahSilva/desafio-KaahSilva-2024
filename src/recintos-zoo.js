@@ -6,7 +6,7 @@ class RecintosZoo {
             {numero:1,bioma:'savana',tamanhoTotal:10,animais:[{animal:'MACACO', quantidade:3}]},
             {numero:2,bioma:'floresta', tamanhoTotal:5,animais:[]},
             {numero:3,bioma:'savana e rio',tamanhoTotal:7, animais:[{animal:'GAZELA'}]},
-            {numero:4,bioma:' rio', tamanhoTotal:8, animais:[ ]},
+            {numero:4,bioma:'rio', tamanhoTotal:8, animais:[ ]},
             {numero: 5 , bioma:'savana', tamanhoTotal:9, animais:[{animal:'LEAO'}]}
 
 
@@ -53,11 +53,12 @@ class RecintosZoo {
             const espacoOcupado=this.calcularEspacoOcupado(recinto.animais)
             const espacoLivre = recinto.tamanhoTotal- espacoOcupado
 
+
             // REGRAS PARA ENCONTRAR UM RECINTO: 1)Um animal se sente confortável se está num bioma adequado e com espaço suficiente para cada indivíduo
-            if(bioma.includes(recinto.bioma)|| (recinto.bioma.includes)){
+            if(bioma.includes(recinto.bioma)){
 
                 //REGRAS PARA ENCONTRAR UM RECINTO: 4) Hipopótamo(s) só tolera(m) outras espécies estando num recinto com savana e rio
-                if(animal === 'HIPOPOTAMO' && recinto.animais.length > 0 && recinto.animais.length > 0 && recinto.bioma !== 'savana e rio'){
+                if (animal === 'HIPOPOTAMO' && recinto.animais.length > 0 && recinto.bioma !== 'savana e rio') {
                     return
                 }
 
@@ -92,15 +93,21 @@ class RecintosZoo {
 
                 //REGRAS PARA ENCONTRAR UM RECINTO: 6)Quando há mais de uma espécie no mesmo recinto, é preciso considerar 1 espaço extra ocupado
 
-                const espacoExtra = 0;
-                if(recinto.animais.length>0 && recinto.animais[0].animal !== animal){
+                let espacoExtra = 0;
+                // Só considera espaço extra se houver outra espécie no recinto
+                if (recinto.animais.length > 0 && recinto.animais[0].animal !== animal) {
                     espacoExtra = 1;
-
                 }
+
+                // console.log(`Espaço extra: ${espacoExtra}`);
 
                 if (espacoLivre >= tamanhoTotal + espacoExtra) {
                     recintosViaveis.push(`Recinto ${recinto.numero} (espaço livre: ${espacoLivre - (tamanhoTotal + espacoExtra)} total: ${recinto.tamanhoTotal})`);
+
+                    // console.log(`Recinto ${recinto.numero} é viável.`);
                 }
+
+        
                 
                 
             }
